@@ -39,7 +39,7 @@ The general steps of an evolutionary computation algorithm are shown below.
 
 ### 2) Explain some basic concepts and terms related to genetic algorithm with binary representation i.e. population, chromosome, gene, allele, fitness function, and genetic operators
 
-Text Text Text
+Text Text Text teste
 
 ### 3) Compare the single-point and two-point crossover in a genetic algorithm with binary representation.
 
