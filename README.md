@@ -34,8 +34,8 @@ The general steps of an evolutionary computation algorithm are shown below.
 **References:**
  - [Evolutionary Computation - Medium](https://towardsdatascience.com/evolutionary-computation-full-course-overview-f4e421e945d9)
  - [Evolutionary Computation - Wikipedia](https://en.wikipedia.org/wiki/Evolutionary_computation)
- - [Evolutionary Computation - ScieneDirect](https://www.sciencedirect.com/topics/computer-science/evolutionary-computation)
- - [A Survey of Intrusion Detection Systems Using Evolutionary Computation](https://www.sciencedirect.com/science/article/pii/B9780128015384000045) 
+ - [Evolutionary Computation - ScienceDirect](https://www.sciencedirect.com/topics/computer-science/evolutionary-computation)
+ - [A Survey of Intrusion Detection Systems Using Evolutionary Computation - ScienceDirect](https://www.sciencedirect.com/science/article/pii/B9780128015384000045) 
 
 ### 2) Explain some basic concepts and terms related to genetic algorithm with binary representation i.e. population, chromosome, gene, allele, fitness function, and genetic operators
 
