@@ -39,9 +39,9 @@ The general steps of an evolutionary computation algorithm are shown below.
 
 ### 2) Explain some basic concepts and terms related to genetic algorithm with binary representation i.e. population, chromosome, gene, allele, fitness function, and genetic operators
 
-**Initial Population:**
+**Initial Population:** Set of individuals 
 
-**Chromosome:**
+**Chromosome:** Individual 
 
 **Gene:**
 
@@ -61,9 +61,25 @@ Text Text Text
 
 ### 4) What are some potentialities and disadvantages of genetic algorithms?
 
-Text Text Text
+**Advantages**:
+1. The concept is easy to understand;
+2. GA search from a population of points, not a single point;
+3. GA use payoff (objective function) information, not derivatives;
+4. GA supports multi-objective optimization;
+5. GA use probabilistic transition rules, not deterministic rules;
+6. GA is good for "noisy" environments;
+7. GA is robust w.r.t to local minima/maxima
+8. GA is easily parallelised;
+9. GA can operate on various representation;
+10. GA is stochastic;
+11. GA work well on mixed discrete/continuous problem.
 
-### 5) Describe the crossover (recombination) operation in a classical differential evolutionapproach.
+**Disadvantages:**
+1. GA implementation is still an art;
+2. GA requires less information about the problem, but designing an objective function and getting the representation and operators right can be difficult;
+3. GA is computationally expensive i.e. time-consuming.
+
+### 5) Describe the crossover (recombination) operation in a classical differential evolution approach.
 
 Text Text Text
 
