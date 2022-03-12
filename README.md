@@ -6,7 +6,8 @@ Universidade Federal do Paraná (UFPR)
 1. Diego Garzaro
 2. Éder Hamasaki
 3. Leonardo Bein
-4. Vinícius Parede
+4. Natália Choma
+5. Vinícius Parede
 
 ## Part 01: Theoretical
 
