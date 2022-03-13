@@ -69,6 +69,42 @@ class PressureVessel(ElementwiseProblem):
         out["F"] = [f]
         out["G"] = [g1, g2, g3, g4]
 
+class SpeedReducer(ElementwiseProblem):
+    
+    def __init__(self):
+        super().__init__(n_var=7,
+                         n_obj=1,
+                         n_constr=11,
+                         xl=np.array([2.6, 0.7, 17, 7.3, 7.8, 2.9, 5.0]),
+                         xu=np.array([3.6, 0.8, 28, 8.3, 8.3, 3.9, 5.5]))
+
+    def _evaluate(self, x, out, *args, **kwargs):
+        x1, x2, x3, x4, x5, x6, x7 = tuple(x)
+
+        # function
+        f = 0.7854 * x1 * (x2 ** 2) * \
+            ( 3.3333 * (x3 ** 2) + 14.9334 * x3 - 43.0934) - \
+            1.508 * x1 * ( x6 ** 2 + x7 ** 2 ) + \
+            7.4777 * ( x6 ** 3 + x7 ** 3 ) + \
+            0.7854 * (x4 * (x6 ** 2) + x5 * (x7**2) )
+
+        # constraints 
+        g1  = 27/(x1 * ( x2 ** 2 ) * x3) - 1
+        g2  = 397.5/(x1 * ( x2 ** 2 ) * (x3 ** 2)) - 1
+        g3  = (1.93 * ( x4 ** 3 ))/(x2 * x3  * (x6 ** 4)) - 1
+        g4  = (1.93 * ( x5 ** 3 ))/(x2 * x3  * (x7 ** 4)) - 1
+        g5  = np.sqrt( ( (745*x4)/(x2*x3) )**2 + 16.9e6 )/(110 * (x6 ** 3)) - 1
+        g6  = np.sqrt( ( (745*x5)/(x2*x3) )**2 + 157.5e6 )/(85 * (x7 ** 3)) - 1
+        g7  = x2*x3/40 - 1
+        g8  = (5*x2)/x1 - 1
+        g9  = x1/(12*x2) - 1
+        g10 = (1.5*x6 + 1.9)/x4 - 1
+        g11 = (1.1*x7 + 1.9)/x5 - 1
+
+        out["F"] = [f]
+        out["G"] = [g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11]
+
+    
 
 # numero_genes * pop_size = 
 # 1 -> 30 * iteration
@@ -85,6 +121,7 @@ termination = get_termination("n_gen", 32)
 
 tension_compression = TensionCompressionSpring()
 pressure_vessel = PressureVessel()
+speed_reducer = SpeedReducer()
 
 '''
 res = minimize(
