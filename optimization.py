@@ -1,6 +1,10 @@
+from xmlrpc.client import boolean
 import numpy as np
 import matplotlib.pyplot as plt
 from pymoo.algorithms.moo.nsga2 import NSGA2
+from pymoo.algorithms.soo.nonconvex.ga import GA
+from pymoo.algorithms.soo.nonconvex.de import DE
+from pymoo.operators.sampling.lhs import LHS
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.optimize import minimize
 from pymoo.visualization.scatter import Scatter
@@ -104,49 +108,82 @@ class SpeedReducer(ElementwiseProblem):
         out["F"] = [f]
         out["G"] = [g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11]
 
-    
 
-# numero_genes * pop_size = 
-# 1 -> 30 * iteration
-# 2 -> 30 * 2 = 60
-# ..
-# 10000 
 
-algorithm = NSGA2(
-    pop_size=100,
-    crossover=get_crossover('real_sbx', prob=0.8),
-    mutation=get_mutation('real_pm', prob=0.05)
-)   
-termination = get_termination("n_gen", 32)
+def genetic_algorithm (problem: object, crossover_probability: float, mutation_probability: float, number_genes: int, print_verbose: bool):
+    termination = get_termination("n_gen", number_genes)
+    algorithm_ga = GA(
+        pop_size=100,
+        crossover=get_crossover('real_sbx', prob=crossover_probability),
+        mutation=get_mutation('real_pm', prob=mutation_probability)
+    )
+    res_ga = minimize(
+        problem,
+        algorithm_ga,
+        termination,
+        seed=1,
+        save_history=True,
+        verbose=print_verbose
+    )
+    return res_ga
 
-tension_compression = TensionCompressionSpring()
-pressure_vessel = PressureVessel()
-speed_reducer = SpeedReducer()
+def nsga2_algorithm (problem: object, crossover_probability: float, mutation_probability: float, number_genes: int, print_verbose: bool):
+    termination = get_termination("n_gen", number_genes)
+    algorithm_nsga2 = NSGA2(
+        pop_size=100,
+        crossover=get_crossover('real_sbx', prob=crossover_probability),
+        mutation=get_mutation('real_pm', prob=mutation_probability)
+    )
+    res_nsga2 = minimize(
+        problem,
+        algorithm_nsga2,
+        termination,
+        seed=1,
+        save_history=True,
+        verbose=print_verbose
+    )
+    return res_nsga2
 
-'''
-res = minimize(
-    tension_compression,
-    algorithm,
-    termination,
-    seed=1,
-    save_history=True,
-    verbose=True
-)
-print(res.X)
-print(res.F)
-'''
-res = minimize(
-    pressure_vessel,
-    algorithm,
-    termination,
-    seed=1,
-    save_history=True,
-    verbose=True
-)
-pop = res.pop
-print(res.X)
-print(res.F)
+def de_algorithm (problem: object, number_genes: int, print_verbose: bool):
+    termination = get_termination("n_gen", number_genes)
+    algorithm_de = DE(
+        pop_size=100,
+        sampling=LHS(),
+        variant="DE/rand/1/bin",
+        CR=0.3,
+        dither="vector",
+        jitter=False
+    ) 
+    res_de = minimize(
+        problem,
+        algorithm_de,
+        termination,
+        seed=1,
+        save_history=True,
+        verbose=print_verbose
+    )
+    return res_de
 
-#plt.plot(pop.get('F'))
-#plt.show()
+# problem
+# TensionCompressionSpring()
+# PressureVessel()
+# SpeedReducer()
+
+# algorithm
+# genetic_algorithm(problem, 0.9, 0.01, 30, True)
+# nsga2_algorithm(problem, 0.9, 0.01, 30, True)
+# de_algorithm(problem, 30, True)
+
+problem = PressureVessel()
+
+res_algorithm = de_algorithm(problem, 30, True)
+
+pop_algorithm = res_algorithm.pop
+pop_pop_algorithm = res_algorithm.pop
+
+print(res_algorithm.X)
+print(res_algorithm.F)
+
+plt.plot(pop_algorithm.get('F'), color='red')
+plt.show()
 
