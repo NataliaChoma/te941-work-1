@@ -1,5 +1,8 @@
-from xmlrpc.client import boolean
+from hashlib import algorithms_available
 import numpy as np
+import getpass
+import os
+import platform
 import matplotlib.pyplot as plt
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.algorithms.soo.nonconvex.ga import GA
@@ -7,12 +10,11 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.optimize import minimize
-from pymoo.visualization.scatter import Scatter
 from pymoo.factory import get_termination
 from pymoo.factory import get_crossover
 from pymoo.factory import get_mutation
 
-class TensionCompressionSpring(ElementwiseProblem):
+class TensionCompressionSpring (ElementwiseProblem):
     
     # 0.05 <= x[0] <= 2
     # 0.25 <= x[1] <= 1.3
@@ -39,7 +41,7 @@ class TensionCompressionSpring(ElementwiseProblem):
         out["F"] = [f]
         out["G"] = [g1, g2, g3, g4]
 
-class PressureVessel(ElementwiseProblem):
+class PressureVessel (ElementwiseProblem):
     
     # 0.1 <= x[0] <= 99
     # 0.1 <= x[1] <= 99
@@ -73,7 +75,7 @@ class PressureVessel(ElementwiseProblem):
         out["F"] = [f]
         out["G"] = [g1, g2, g3, g4]
 
-class SpeedReducer(ElementwiseProblem):
+class SpeedReducer (ElementwiseProblem):
     
     def __init__(self):
         super().__init__(n_var=7,
@@ -107,8 +109,6 @@ class SpeedReducer(ElementwiseProblem):
 
         out["F"] = [f]
         out["G"] = [g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11]
-
-
 
 def genetic_algorithm (problem: object, crossover_probability: float, mutation_probability: float, number_genes: int, print_verbose: bool):
     termination = get_termination("n_gen", number_genes)
@@ -164,6 +164,85 @@ def de_algorithm (problem: object, number_genes: int, print_verbose: bool):
     )
     return res_de
 
+def graph_plot (res_algorithm):
+    pass
+
+def menu ():
+    print('Hello', getpass.getuser(), '!')
+    print('Welcome to the mechanical studies design optimization tool\n')
+    
+    print('Team: ')
+    print(' 1. Diego Garzaro: GRR20172364')
+    print(' 2. Éder Hamasaki: GRR20172189')
+    print(' 3. Leonardo Bein: GRR20172158')
+    print(' 4. Natália Choma: GRR20160059')
+    print(' 5. Vinícius Parede: GRR20172137\n')
+
+    print('Problems: 1 - Tension/Compression Spring | 2 - Pressure Vessel | 3 - Speed Reducer\n')
+    print('The problems are resolved with 3 different algorithmics')
+    print('Genetic Algorithmic (GA), Non-dominated Sorting Genetic Algorithm (NSGA-II) and Differential Evolution (DE)\n')
+
+def clean_screen ():
+    operating_system = platform.system()
+    if operating_system == 'Windows': 
+        os.system('cls')
+    elif operating_system == 'Linux': 
+        os.system('clear')
+    else: 
+        print(platform.platform(), 'not suported')
+
+def main ():
+    clean_screen()
+    menu()
+    
+    problems = [TensionCompressionSpring(), PressureVessel(), SpeedReducer()]
+    problems_names = ['Tension/Compression Spring', 'Pressure Vessel', 'Speed Reducer']
+    algorithms_names = ['GA', 'NSGA-II', 'DE']
+
+    x_besst_solution = [
+        [0.051749, 0.358179, 11.203763],
+        [0.8125, 0.4375, 42.098446, 176.636596],
+        [3.49999, 0.6999, 17, 7.3, 7.8, 3.3502, 5.2866]
+    ]
+    y_best_solution = [0.012665, 6059.714339, 2996.3481]
+
+    iterator = 0
+    for problem in problems:
+        res_algorithm_ga = genetic_algorithm(problem, 0.9, 0.01, 30, False)
+        res_algorithm_nsga2 = nsga2_algorithm(problem, 0.9, 0.01, 30, False)
+        res_algorithm_de = de_algorithm(problem, 30, False)
+        
+        print(problems_names[iterator])
+        print('------------------------------------------------------')
+        print('f(x) = ', y_best_solution[iterator], 'Best Solution')
+        print('f(x) = ', res_algorithm_ga.F[0], algorithms_names[0])
+        print('f(x) = ', res_algorithm_nsga2.F[0], algorithms_names[1])
+        print('f(x) = ', res_algorithm_de.F[0], algorithms_names[2], '\n')
+
+        print('X =', x_besst_solution[iterator], 'Best Solution')
+        print('X =', res_algorithm_ga.X, algorithms_names[0])
+        print('X =', res_algorithm_nsga2.X, algorithms_names[1])
+        print('X =', res_algorithm_de.X, algorithms_names[2])
+        print('------------------------------------------------------\n')
+        iterator += 1
+
+    '''
+    problem = SpeedReducer()
+
+    res_algorithm = de_algorithm(problem, 30, True)
+
+    pop_algorithm = res_algorithm.pop
+
+    print(res_algorithm.X)
+    print(res_algorithm.F)
+
+    plt.plot(pop_algorithm.get('F'), color='red')
+    plt.show()
+    '''
+
+if __name__ == '__main__':
+    main()
+
 # problem
 # TensionCompressionSpring()
 # PressureVessel()
@@ -173,17 +252,3 @@ def de_algorithm (problem: object, number_genes: int, print_verbose: bool):
 # genetic_algorithm(problem, 0.9, 0.01, 30, True)
 # nsga2_algorithm(problem, 0.9, 0.01, 30, True)
 # de_algorithm(problem, 30, True)
-
-problem = PressureVessel()
-
-res_algorithm = de_algorithm(problem, 30, True)
-
-pop_algorithm = res_algorithm.pop
-pop_pop_algorithm = res_algorithm.pop
-
-print(res_algorithm.X)
-print(res_algorithm.F)
-
-plt.plot(pop_algorithm.get('F'), color='red')
-plt.show()
-
