@@ -82,8 +82,9 @@ Text Text Text
 
 ### 5) Describe the crossover (recombination) operation in a classical differential evolution approach.
 
-Text Text Text
+Differential evolution resumes in an algorithm to resolve  continuous optmization problems. It can be easy to understand, very applicable, dynamic, multi and many objetice optmization. 
+The algorithm consists in 4 steps in which there's, inicialization, mutation, recombination and selection. Focusing on the recombination, this is the result from the others steps calculations, the crossover controls changed elements from the parents. If there's is a higher probability of recombination, the new population can have more variety of introduced variation on the population increasing the convergency. 
 
 ### 6) Describe the mutation operation in a classical differential evolution approach.
-
-Text Text Text
+The mutation operation in a classical differential evolution approach begins with a strategie of taggering the vector selection, differentiating the number of different vector used and how it's determined the crossover points. 
+>>>>A CONTINUAR<<<<
