@@ -6,7 +6,8 @@ Universidade Federal do Paraná (UFPR)
 1. Diego Garzaro
 2. Éder Hamasaki
 3. Leonardo Bein
-4. Vinícius Parede
+4. Natália Choma
+5. Vinícius Parede
 
 ## Part 01: Theoretical
 
@@ -39,21 +40,21 @@ The general steps of an evolutionary computation algorithm are shown below.
 
 ### 2) Explain some basic concepts and terms related to genetic algorithm with binary representation i.e. population, chromosome, gene, allele, fitness function, and genetic operators
 
-**Initial Population:** Set of individuals 
+**Initial Population:** It's a set of individuals for the solution of the problem.  
 
-**Chromosome:** Individual 
+**Chromosome:** It's a gene in form of a string, it can be one solution for the given problem.
 
-**Gene:**
+**Gene:** It's a set of parameters or variables that characterizes an individual, or the position of a chromosome.
 
-**Allele:**
+**Allele:** It's a value of gene that takes a particular chromosome.
 
-**Fitness function:**
+**Fitness function:** It's the function that determines the ability of an individual to suit or fit, based on their hability to compete with others individuals. 
 
-**Genetic operators:**
+**Genetic operators:** the genetic operators modify the future population composition, these operators can be: crossover, mutation, selection.
 
 **References:**
 - [Introduction to Genetic Algorithms - Medium](https://towardsdatascience.com/introduction-to-genetic-algorithms-including-example-code-e396e98d8bf3)
-- 
+- [Genetic Algorithms - Quick Guide](https://www.tutorialspoint.com/genetic_algorithms/genetic_algorithms_quick_guide.htm)
 
 ### 3) Compare the single-point and two-point crossover in a genetic algorithm with binary representation.
 
