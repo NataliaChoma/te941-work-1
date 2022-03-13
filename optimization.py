@@ -164,8 +164,41 @@ def de_algorithm (problem: object, number_genes: int, print_verbose: bool):
     )
     return res_de
 
-def graph_plot (res_algorithm):
-    pass
+def graph_plot (res_ga, res_nsga2, res_de, y_best, problem_name):
+    fig, ax = plt.subplots(nrows=3, ncols=1, figsize=(15,8), num=problem_name)
+
+    hist_ga = [h_ga.pop.get('F') for h_ga in res_ga.history]
+    hist_nsga2 = [h_nsga2.pop.get('F') for h_nsga2 in res_nsga2.history]
+    hist_de = [h_de.pop.get('F') for h_de in res_de.history]
+
+    ax[0].plot([h_ga.mean() for h_ga in hist_ga], linewidth=4, linestyle='dotted', color='blue', label='GA Average')
+    ax[0].hlines(y=y_best, xmin=0, xmax=30, linewidth=3, color='r', label='best solution')
+
+    ax[0].set_xlabel('Generation')
+    ax[0].set_ylabel('Fitness')
+    ax[0].set_title('Genetic Algorithmic')
+    ax[0].legend()
+
+    ax[1].plot([h_nsga2.mean() for h_nsga2 in hist_nsga2], linewidth=4, linestyle='dotted', color='blue', label='NSGA Average')
+    ax[1].hlines(y=y_best, xmin=0, xmax=30, linewidth=3, color='r', label='best solution')
+
+    ax[1].set_xlabel('Generation')
+    ax[1].set_ylabel('Fitness')
+    ax[1].set_title('NSGAII Algorithmic')
+    ax[1].legend()
+
+    ax[2].plot([h_de.mean() for h_de in hist_de], linewidth=4, linestyle='dotted', color='blue', label='DE Average')
+    ax[2].hlines(y=y_best, xmin=0, xmax=30, linewidth=3, color='r', label='best solution')
+
+    ax[2].set_xlabel('Generation')
+    ax[2].set_ylabel('Fitness')
+    ax[2].set_title('Differential Evolution Algorithmic')
+    ax[2].legend()
+
+    fig.tight_layout()
+    plt.show()
+    
+
 
 def menu ():
     print('Hello', getpass.getuser(), '!')
@@ -199,7 +232,7 @@ def main ():
     problems_names = ['Tension/Compression Spring', 'Pressure Vessel', 'Speed Reducer']
     algorithms_names = ['GA', 'NSGA-II', 'DE']
 
-    x_besst_solution = [
+    x_best_solution = [
         [0.051749, 0.358179, 11.203763],
         [0.8125, 0.4375, 42.098446, 176.636596],
         [3.49999, 0.6999, 17, 7.3, 7.8, 3.3502, 5.2866]
@@ -219,36 +252,15 @@ def main ():
         print('f(x) = ', res_algorithm_nsga2.F[0], algorithms_names[1])
         print('f(x) = ', res_algorithm_de.F[0], algorithms_names[2], '\n')
 
-        print('X =', x_besst_solution[iterator], 'Best Solution')
+        print('X =', x_best_solution[iterator], 'Best Solution')
         print('X =', res_algorithm_ga.X, algorithms_names[0])
         print('X =', res_algorithm_nsga2.X, algorithms_names[1])
         print('X =', res_algorithm_de.X, algorithms_names[2])
         print('------------------------------------------------------\n')
+
+        graph_plot(res_algorithm_ga, res_algorithm_nsga2, res_algorithm_de, y_best_solution[iterator], problems_names[iterator])
+
         iterator += 1
-
-    '''
-    problem = SpeedReducer()
-
-    res_algorithm = de_algorithm(problem, 30, True)
-
-    pop_algorithm = res_algorithm.pop
-
-    print(res_algorithm.X)
-    print(res_algorithm.F)
-
-    plt.plot(pop_algorithm.get('F'), color='red')
-    plt.show()
-    '''
 
 if __name__ == '__main__':
     main()
-
-# problem
-# TensionCompressionSpring()
-# PressureVessel()
-# SpeedReducer()
-
-# algorithm
-# genetic_algorithm(problem, 0.9, 0.01, 30, True)
-# nsga2_algorithm(problem, 0.9, 0.01, 30, True)
-# de_algorithm(problem, 30, True)
