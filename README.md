@@ -85,6 +85,12 @@ Text Text Text
 Differential evolution resumes in an algorithm to resolve  continuous optmization problems. It can be easy to understand, very applicable, dynamic, multi and many objetice optmization. 
 The algorithm consists in 4 steps in which there's, inicialization, mutation, recombination and selection. Focusing on the recombination, this is the result from the others steps calculations, the crossover controls changed elements from the parents. If there's is a higher probability of recombination, the new population can have more variety of introduced variation on the population increasing the convergency. 
 
+**References:**
+-[Differential Evolution: Population Topologies, Ensemble Strategies and Adaptation](https://www.cs.usm.maine.edu/~congdon/Conferences/CEC2015/Suganthan.CEC2015.tutorial.pdf)
+
 ### 6) Describe the mutation operation in a classical differential evolution approach.
-The mutation operation in a classical differential evolution approach begins with a strategie of taggering the vector selection, differentiating the number of different vector used and how it's determined the crossover points. 
->>>>A CONTINUAR<<<<
+The mutation operation in a classical differential evolution approach begins with the strategie of taggering the vector selection (x), distinguishing the number of different vectors used (y) and how it's determined the crossover points (z). 
+The DE stands for Differential Evolution, in which the mutation strategie is used as DE/x/y/z, for each axes: DEx it's a string representing the vector string to be perturbed; DEy is the perturbation from the vector x and DEz is the type of crossover used. Each vector can be select three other paremeters (vector) randomly with self-referential mutation.
+
+**References:**
+-[Differential Evolution: Population Topologies, Ensemble Strategies and Adaptation](https://www.cs.usm.maine.edu/~congdon/Conferences/CEC2015/Suganthan.CEC2015.tutorial.pdf)
