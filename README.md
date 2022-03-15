@@ -58,7 +58,10 @@ The general steps of an evolutionary computation algorithm are shown below.
 
 ### 3) Compare the single-point and two-point crossover in a genetic algorithm with binary representation.
 
-Text Text Text
+For the single-point crossover one string on the parent is selected, the data after that point is swapped between the two organisms. For the two-point crossover, two random points are selected on the individual chromosomes and the genetic material is exchanged at these points.
+
+**References:**
+- [Crossover in Genetic Algorithm](https://www.geeksforgeeks.org/crossover-in-genetic-algorithm/)
 
 ### 4) What are some potentialities and disadvantages of genetic algorithms?
 
